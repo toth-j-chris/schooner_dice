@@ -44,6 +44,7 @@ class Category(Enum):
     LARGE_STRAIGHT = 40
     SCHOONER = 50
 
+
 number_categories = {
     Category.ONES,
     Category.TWOS,
@@ -160,7 +161,3 @@ def top_categories(dice_roll: list[int]) -> list[Category]:
             top_categories.append(category)
 
     return top_categories
-
-
-if __name__ == "__main__":
-    import sys
