@@ -62,7 +62,7 @@ The score_calculator module itself can be imported in another python module or t
     `from schooner_dice import score_calculator`
 
 The methods exposed from the score_calculator module are:  
-| Method Name | Parameters -> Type | Returns -> Type |
+| Method Name | Parameters : Type | Returns : Type |
 | ----------- | ---------- | ------ |
-| score() | category -> Category(Enum), <br /> dice_roll -> List[int] | The score of the dice_roll in the given category -> int |
-| top_categories() | dice_roll -> List[int] | List of one or more top scoring Category for the given dice_roll -> List[Category(Enum)] |
+| score() | category : Category(Enum) <br/> dice_roll : List[int] | The score of the dice_roll in the given category : int |
+| top_categories() | dice_roll -> List[int] | List of one or more top scoring Category for the given dice_roll : List[Category(Enum)] |
