@@ -10,38 +10,42 @@ Currently, there is only one module implemented in this package: a scoring modul
 ## Requirements
 - python3 (python 3.11 was used in development, only >=3.6 should be strictly necessary but this was not tested)
 
-## Set up environment for testing/development (Linux/MacOS)
+## Set up environment for testing/development
 Each instruction is followed by a command to be executed from a terminal.
 
 1. Create a python virtual environment (replace the path with your desired file location):  
     `python3 -m venv path/to/schooner_dice_venv`
 
 2. Activate the virtual environment, once again replacing the path with the one used in Step 1:  
-    `source path/to/schooner_dice_venv/bin/activate`
+    `source path/to/schooner_dice_venv/bin/activate` (Linux/MacOS)  
+    `path\to\schooner_dice_venv\Scripts\Activate.ps1` (Windows Powershell)
 
     This should add the virtual environment name to your terminal prompt, but you can otherwise verify that it is activated
     by running:  
-    `which python`
+    `which python` (Linux/MacOS)  
+    `where.exe python` (Windows Powershell)
 
-    This should output path/to/schooner_dice_venv/bin/python
+    The output should include: path/to/schooner_dice_venv/bin/python
 
 3. From the top level of the project directory (where the pyproject.toml file is located), run the following:  
     `python -m pip install -e .`
 
-## Build the project into a distribution package (Linux/MacOS)
+## Build the project into a distribution package
 If you already have a testing/development environment for this project (see above) you can start at Step 2.
 
 1. Create a python virtual environment (replace the path with your desired file location):  
     `python3 -m venv path/to/schooner_dice_venv`
 
 2. Activate the virtual environment, once again replacing the path with the one used in Step 1:  
-    `source path/to/schooner_dice_venv/bin/activate`
+    `source path/to/schooner_dice_venv/bin/activate` (Linux/MacOS)  
+    `path\to\schooner_dice_venv\Scripts\Activate.ps1` (Windows Powershell)
 
     This should add the virtual environment name to your terminal prompt, but you can otherwise verify that it is activated
     by running:  
-    `which python`
+    `which python` (Linux/MacOS)  
+    `where.exe python` (Windows Powershell)
 
-    This should output path/to/schooner_dice_venv/bin/python
+    The output should include: path/to/schooner_dice_venv/bin/python
 
 3. Install build tools:  
     `python -m pip install --upgrade build`
