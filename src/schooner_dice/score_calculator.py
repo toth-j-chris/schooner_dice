@@ -14,6 +14,7 @@ score of the dice_roll is calculated.
 """
 
 from enum import Enum
+from collections import Counter
 
 
 class Category(Enum):
@@ -44,17 +45,21 @@ class Category(Enum):
     LARGE_STRAIGHT = 40
     SCHOONER = 50
 
+    @classmethod
+    def is_number_category(cls, category: Enum) -> bool:
+        if category in {
+            cls.ONES,
+            cls.TWOS,
+            cls.THREES,
+            cls.FOURS,
+            cls.FIVES,
+            cls.SIXES,
+            cls.SEVENS,
+            cls.EIGHTS,
+        }:
+            return True
 
-number_categories = {
-    Category.ONES,
-    Category.TWOS,
-    Category.THREES,
-    Category.FOURS,
-    Category.FIVES,
-    Category.SIXES,
-    Category.SEVENS,
-    Category.EIGHTS,
-}
+        return False
 
 
 def score(category: Category, dice_roll: list[int]) -> int:
@@ -69,9 +74,10 @@ def score(category: Category, dice_roll: list[int]) -> int:
         category.
     """
     # dictionary of # occurrences for each die value
-    roll_counts = {x: dice_roll.count(x) for x in set(dice_roll)}
-
-    if category in number_categories:
+    roll_counts = Counter(dice_roll)
+    roll_set = set(dice_roll)
+    
+    if Category.is_number_category(category):
         return roll_counts.get(category.value, 0) * category.value
 
     if category == Category.THREE_OF_A_KIND and any(
@@ -94,13 +100,13 @@ def score(category: Category, dice_roll: list[int]) -> int:
     if category == Category.SMALL_STRAIGHT and _has_straight(dice_roll, 4):
         return Category.SMALL_STRAIGHT.value
 
-    if category == Category.ALL_DIFFERENT and len(set(dice_roll)) == 5:
+    if category == Category.ALL_DIFFERENT and len(roll_set) == 5:
         return Category.ALL_DIFFERENT.value
 
     if category == Category.LARGE_STRAIGHT and _has_straight(dice_roll, 5):
         return Category.LARGE_STRAIGHT.value
 
-    if category == Category.SCHOONER and len(set(dice_roll)) == 1:
+    if category == Category.SCHOONER and len(roll_set) == 1:
         return Category.SCHOONER.value
 
     if category == Category.CHANCE:
@@ -109,7 +115,7 @@ def score(category: Category, dice_roll: list[int]) -> int:
     return 0
 
 
-def _has_straight(dice_roll: list[int], length: int) -> bool:
+def _has_straight(roll_set: set[int], length: int) -> bool:
     """Checks dice_roll for a straight of {length} size.
 
     A straight consists of consecutive numbers occurring in the same dice_roll.
@@ -125,7 +131,7 @@ def _has_straight(dice_roll: list[int], length: int) -> bool:
         False if there is no straight of the specified length.
     """
     # sorted list of the unique values in the dice_roll
-    sorted_rolls = sorted(set(dice_roll))
+    sorted_rolls = sorted(roll_set)
 
     # if range initializes with 0 or negative, not enough values for a straight
     for i in range((len(sorted_rolls) - length) + 1):
@@ -149,15 +155,7 @@ def top_categories(dice_roll: list[int]) -> list[Category]:
     Returns:
         A list of one or more Categories.
     """
-    top_categories = []
-    top_score = 0
 
-    for category in Category:
-        temp_score = score(category, dice_roll)
-        if temp_score > top_score:
-            top_score = temp_score
-            top_categories = [category]
-        elif temp_score == top_score:
-            top_categories.append(category)
-
-    return top_categories
+    scores = {category: score(category, dice_roll) for category in Category}
+    top_score = max(scores.values())
+    return [category for category, cat_score in scores.items() if cat_score == top_score]
